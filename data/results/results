@@ -1,0 +1,17 @@
+# extended-modularity
+# dataset       CNM             Infomap
+
+network         0.880231094706  0.823834056
+high-energy     0.812703496133  0.540450186297
+inets           0.13188625522   0.1171782977547
+astrophysics    0.734260759791  0.3910965883613
+condensed-phys  0.730780691524  0.392674550703
+
+# vanilla-modularity
+# dataset       CNM        
+
+network         0.956770867416
+high-energy     0.822322600215
+inets           0.629818920233
+astrophysics    0.626816569317
+condensed-phys  0.649179402581

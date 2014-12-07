@@ -2,7 +2,7 @@
 import sys
 
 in_file = open(sys.argv[1])
-out_file = open(sys.argv[2], 'w')
+out_file = open(sys.argv[2], 'w+')
 
 comment_symbol = "#"
 
@@ -19,7 +19,6 @@ for line in in_file:
         node = int(items[1])
         
         if last_index != index:
-            print last_index
             if last_index != None:
                 out_file.write(community.strip() + "\n")
                 community = ""
