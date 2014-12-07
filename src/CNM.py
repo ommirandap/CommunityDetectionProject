@@ -12,17 +12,18 @@ nodes_file.close()
 
 edges_file = open(sys.argv[2])
 comment_symbol = "#"
-
+edges = 0
 for line in edges_file:
     if line.startswith(comment_symbol):
         continue
     else:
         nodes = line.split()
         graph.AddEdge(int(nodes[0].strip()), int(nodes[1].strip()))
+        edges += 1
 
-print "Graph Loaded"
 communities = snap.TCnComV()
 
 modularity = snap.CommunityCNM(graph, communities)
 
 print modularity
+
