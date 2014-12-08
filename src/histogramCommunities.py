@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import matplotlib.axes as axs
 import sys, string
 import math as m
+import powerlaw
 
 file_handler = open(sys.argv[1],'r')
 
@@ -43,9 +44,14 @@ for i in range(len(sortedArray)):
 
 #print occu
 
+fit = powerlaw.Fit(occu)
+print fit.power_law.alpha
+print fit.power_law.sigma
+print fit.distribution_compare('power_law', 'exponential')
+
 y = np.arange(0, len(occu), 1)
-#fig = plt.loglog(y, occu)
-fig = plt.plot(y, occu)
+exfig = plt.loglog(y, occu)
+#fig = plt.plot(y, occu)
 plt.axis([0, max(occu), 0, maxH])
 plt.savefig('miau.png')
 plt.show()
