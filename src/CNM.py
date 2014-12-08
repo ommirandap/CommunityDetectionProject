@@ -24,4 +24,9 @@ for line in edges_file:
 communities = snap.TCnComV()
 
 modularity = snap.CommunityCNM(graph, communities)
-print modularity
+
+string = ""
+
+for com in communities:
+    print " ".join([str(node) for node in com])
+

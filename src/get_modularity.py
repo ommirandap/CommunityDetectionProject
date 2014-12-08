@@ -23,19 +23,69 @@ for line in edges_file:
         graph.AddEdge(int(nodes[0].strip()), int(nodes[1].strip()))
         n_edges += 1
 
-print "Graph Loaded"
+graph.Defrag()
 
-modularity = 0
-communities_file = open(sys.argv[3])
+modularity = 0.0
 
-for line in communities_file:
-    ids = [ int(item.strip()) for item in line.split() ]
+K = 0.0
 
-    nodes = snap.TIntV()
-    
-    for node_id in ids:
-        nodes.Add(node_id)
+nodeinfo = dict()
 
-    modularity += snap.GetModularity(graph, nodes, n_edges)
+node = graph.BegNI()
+end = graph.EndNI()
+
+while True:
+
+    nodeinfo[node.GetId()] = [ node.GetDeg(), 0 ]
+   
+    if node.Next() == end:
+        break
+
+with open(sys.argv[3]) as communities_file:
+    for line in communities_file:
+        if len(line.split()) == 1:
+            continue
+        K += 1
+        for node in line.split():
+            nodeinfo[int(node.strip())][1] += 1
+
+with open(sys.argv[3]) as communities_file:
+    for line in communities_file:
+        ids = [ int(item.strip()) for item in line.split() ]
+        size = len(ids)
+
+        if size == 1:
+            continue
+
+        nodes = snap.TIntV()
+        
+        for node_id in ids:
+            nodes.Add(node_id)
+
+        subgraph = snap.GetSubGraph(graph, nodes)
+
+        node = subgraph.BegNI()
+        end = subgraph.EndNI()
+
+        acc = 0
+        while True:
+
+            global_degree = nodeinfo[node.GetId()][0]
+            
+            if global_degree == 0:
+                continue
+
+            acc += (2.0 * node.GetDeg() - global_degree) / (1.0 * global_degree *
+                    nodeinfo[node.GetId()][1])
+
+            if node.Next() == end:
+                break
+
+        modularity += 2.0 * acc * subgraph.GetEdges() / ( size * size * (size - 1) )
+
+modularity /= K
 
 print modularity
+
+
+
