@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import matplotlib.axes as axs
 import sys, string
 import math as m
+from networkx.utils import powerlaw_sequence
 import powerlaw
 
 file_handler = open(sys.argv[1],'r')
@@ -43,11 +44,8 @@ for i in range(len(sortedArray)):
 	occu[j] = occu[j] + 1
 
 #print occu
-
-fit = powerlaw.Fit(occu)
-print fit.power_law.alpha
-print fit.power_law.sigma
-print fit.distribution_compare('power_law', 'exponential')
+fitted_pl = powerlaw.Fit(occu)
+print fitted_pl.alpha
 
 y = np.arange(0, len(occu), 1)
 exfig = plt.loglog(y, occu)
