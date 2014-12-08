@@ -24,4 +24,5 @@ communities = snap.TCnComV()
 
 modularity = snap.CommunityGirvanNewman(graph, communities)
 
-print modularity
+for com in communities:
+    print " ".join([str(node) for node in com])
